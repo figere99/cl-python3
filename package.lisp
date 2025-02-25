@@ -54,7 +54,7 @@
   (:export "<" "<=" ">" ">=" "!=" "=="
 	   "|" "^" "&" "<<" ">>" "+" "-" "*" "/" "%" "//" "~" "**"
 	   "|=" "^=" "&=" "<<=" ">>=" "+=" "-=" "*=" "/=" "*=" "/=" "%=" "//=" "**=")
-  (:intern "/t/" "<divmod>" ;; not really operators in the grammar, but used internally.
+  (:intern "<divmod>" ;; not really operators in the grammar, but used internally.
 	   ))
 
 (defpackage :clpython.ast.punctuation
@@ -101,7 +101,7 @@
   (:documentation "Python abstract syntax tree representation")
   (:use :clpython.ast.reserved :clpython.ast.node :clpython.ast.punctuation
 	:clpython.ast.operator :clpython.ast.token :clpython.ast.node-p)
-  (:import-from :clpython.ast.operator "/t/" "<divmod>")
+  (:import-from :clpython.ast.operator "<divmod>")
   (:import-from :clpython.ast.reserved "is not" "not in"))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -161,7 +161,7 @@
 	   "__add__" "__radd__" "__iadd__"  "__sub__" "__rsub__" "__isub__"
 	   "__mul__" "__rmul__" "__imul__"  "__truediv__" "__rtruediv__" "__itruediv__"
 	   "__mod__" "__rmod__" "__imod__"  "__floordiv__" "__rfloordiv__" "__ifloordiv__"
-	   "__div__" "__rdiv__" "__idiv__"  "__lshift__" "__rlshift__" "__irshift__"
+	   "__rdiv__" "__idiv__"  "__lshift__" "__rlshift__" "__irshift__"
 	   "__and__" "__rand__" "__iand__"  "__rshift__" "__rrshift__" "__irshift__"
 	   "__or__"  "__ror__"  "__ior__"   "__divmod__" "__rdivmod__"
 	   "__xor__" "__rxor__" "__ixor__"  "__pow__" "__rpow__" "__ipow__"

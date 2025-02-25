@@ -60,7 +60,7 @@
                     (gt >)
                     (add +)
                     (and_ &)
-                    (div /)
+                    (truediv /)
                     (floordiv //)
                     (lshift <<)
                     (mod %)
@@ -69,7 +69,6 @@
                     (pow **)
                     (rshift >>)
                     (sub  -)
-                    (truediv /t/)
                     (xor ^)
                     (concat +) ;; ?
                     (contains contains))
@@ -176,7 +175,7 @@
                   '((|iadd| +)
                     (|iand| &)
                     (|iconcat| +)
-                    (|idiv| /) ;; check __future__.division
+                    (|itruediv| /) ;; check __future__.division
                     (|ifloordiv| //)
                     (|ilshift| <<)
                     (|imod| %)
@@ -186,7 +185,6 @@
                     (|irepeat| *)
                     (|irshift| >>)
                     (|isub| -)
-                    (|itruediv| /t/)
                     (|ixor| ^))
                 collect `(def-magic-twins ,name (x y) (or (,(sym->iop op) x y)
                                                           (,(sym->op op) x y)))))

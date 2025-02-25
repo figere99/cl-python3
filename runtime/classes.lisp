@@ -2003,10 +2003,12 @@ But if RELATIVE-TO package name is given, result may contains dots."
 	((or (complexp x) (complexp y))
 	 (py-raise '{TypeError} "Cannot compare complexes"))))
 
-(def-py-method py-number.__div__ (x^ y^)
-  (if (and (numberp x) (numberp y))
-      (/ x y) ;; overruled for integers
-    (load-time-value *the-notimplemented*)))
+(def-py-method py-number.__truediv__ (x^ y^)
+  (cond ((and (integerp x) (integerp y))
+	 (careful-float-1ret x y))
+	((and (numberp x) (numberp y))
+	 (/ x y))
+	(t (load-time-value *the-notimplemented*))))
 
 (def-py-method py-number.__divmod__ (x y)
   (cond ((not (and (numberp x) (numberp y)))
@@ -2050,8 +2052,6 @@ But if RELATIVE-TO package name is given, result may contains dots."
 (def-py-method py-number.__repr__ (x^) (format nil "~A" (deproxy x)))
 (def-py-method py-number.__str__ (x^)  (py-number.__repr__ x))
 (def-py-method py-number.__sub__ (x^ y^) (- x y))
-
-(def-py-method py-number.__truediv__ (x^ y^) (/ x y)) ;; overruled for integers
 
 ;; In CPython, only complex numbers have 'real','imag' and 'conjugate'
 ;; attributes; in our world all numbers have them.
@@ -2164,13 +2164,6 @@ But if RELATIVE-TO package name is given, result may contains dots."
 
 (def-py-method py-int.__floordiv__ (x^ y^)
   (careful-float-1ret x y))
-
-(def-py-method py-int.__div__ (x^ y^)
-  (cond ((and (integerp x) (integerp y))
-	 (careful-float-1ret x y))
-	((and (numberp x) (numberp y))
-	 (/ x y))
-	(t (load-time-value *the-notimplemented*))))
        
 (def-py-method py-int.__lshift__ (x^ y^)  (ash x y))
 (def-py-method py-int.__rshift__ (x^ y^)  (ash x (- y)))
@@ -3871,14 +3864,11 @@ finished; F will then not be called again."
      ,(when (and iop-syntax op-syntax)
 	`(setf (gethash ',iop-syntax *binary-iop->op-ht*) ',op-syntax))))
 
-;; /t/ is not Python syntax, but a hack to support __future__ feature
-;; `true division'
 (progn (def-math-func [+]   py-+    {__add__}      {__radd__}       [+=]   py-+=   {__iadd__}      )
        (def-math-func [-]   py--    {__sub__}      {__rsub__}       [-=]   py--=   {__isub__}      )
        (def-math-func [*]   py-*    {__mul__}      {__rmul__}       [*=]   py-*=   {__imul__}      )
-       (def-math-func [/t/] py-/t/  {__truediv__}  {__rtruediv__}   [/t/]  py-/t/= {__itruediv__}  )
+       (def-math-func [/]   py-/    {__truediv__}  {__rtruediv__}   [/]    py-/=   {__itruediv__}  )
        (def-math-func [//]  py-//   {__floordiv__} {__rfloordiv__}  [//=]  py-//=  {__ifloordiv__} ) 
-       (def-math-func [/]   py-/    {__div__}      {__rdiv__}       [/=]   py-/=   {__idiv__}      )
        (def-math-func [%]   py-%    {__mod__}      {__rmod__}       [%=]   py-%=   {__imod__}      )
        (def-math-func [<<]  py-<<   {__lshift__}   {__rlshift__}    [<<=]  py-<<=  {__ilshift__}   )
        (def-math-func [>>]  py->>   {__rshift__}   {__rrshift__}    [>>=]  py->>=  {__irshift__}   )
