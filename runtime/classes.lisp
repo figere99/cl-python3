@@ -2145,27 +2145,29 @@ But if RELATIVE-TO package name is given, result may contains dots."
 
 (def-py-method py-int.__init__ (&rest args) nil)
 
-(defun careful-floor-1ret (x y)
+(defun careful-float-1ret (x y)
   "ANSI requires second arg to be non-zero. Test for that."
-  (when (zerop y)
-    (restart-case (py-raise '{ZeroDivisionError} "Attempt to divide ~A by zero." x)
-      (use-another-divisor (new-divisor)
+  (let ((x (float x))
+        (y (float y)))
+    (when (zerop y)
+      (restart-case (py-raise '{ZeroDivisionError} "Attempt to divide ~A by zero." x)
+        (use-another-divisor (new-divisor)
 	  :report "Use another divisor instead of zero"
 	  :interactive (lambda ()
 			 (loop with divisor = 0
-			     while (zerop divisor)
-			     do (format *query-io* "New divisor value: ")
-				(setf divisor (eval (read *query-io*)))
-			     finally (return (list divisor))))
-	(setf y new-divisor))))
-  (values (floor x y)))
+                               while (zerop divisor)
+                               do (format *query-io* "New divisor value: ")
+                                  (setf divisor (eval (read *query-io*)))
+                               finally (return (list divisor))))
+          (setf y new-divisor))))
+    (values x y)))
 
 (def-py-method py-int.__floordiv__ (x^ y^)
-  (careful-floor-1ret x y))
+  (careful-float-1ret x y))
 
 (def-py-method py-int.__div__ (x^ y^)
   (cond ((and (integerp x) (integerp y))
-	 (careful-floor-1ret x y))
+	 (careful-float-1ret x y))
 	((and (numberp x) (numberp y))
 	 (/ x y))
 	(t (load-time-value *the-notimplemented*))))
