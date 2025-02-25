@@ -2005,7 +2005,7 @@ But if RELATIVE-TO package name is given, result may contains dots."
 
 (def-py-method py-number.__truediv__ (x^ y^)
   (cond ((and (integerp x) (integerp y))
-	 (careful-float-1ret x y))
+	 (careful-/-1ret x y))
 	((and (numberp x) (numberp y))
 	 (/ x y))
 	(t (load-time-value *the-notimplemented*))))
@@ -2145,7 +2145,7 @@ But if RELATIVE-TO package name is given, result may contains dots."
 
 (def-py-method py-int.__init__ (&rest args) nil)
 
-(defun careful-float-1ret (x y)
+(defun careful-/-1ret (x y)
   "ANSI requires second arg to be non-zero. Test for that."
   (let ((x (float x))
         (y (float y)))
@@ -2160,10 +2160,10 @@ But if RELATIVE-TO package name is given, result may contains dots."
                                   (setf divisor (eval (read *query-io*)))
                                finally (return (list divisor))))
           (setf y new-divisor))))
-    (values x y)))
+    (values (/ x y))))
 
 (def-py-method py-int.__floordiv__ (x^ y^)
-  (careful-float-1ret x y))
+  (careful-/-1ret x y))
        
 (def-py-method py-int.__lshift__ (x^ y^)  (ash x y))
 (def-py-method py-int.__rshift__ (x^ y^)  (ash x (- y)))

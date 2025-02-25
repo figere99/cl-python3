@@ -381,7 +381,7 @@
       `(let ((.x ,x)
 	     (.y ,y))
 	 (if (and (integerp .x) (integerp .y)) ;; integer, not number
-	     (careful-float-1ret .x .y)
+	     (careful-/-1ret .x .y)
 	   (locally (declare (notinline py-//))
 	     (py-// .x .y))))
     whole))
@@ -415,9 +415,9 @@
 (defmethod py--  ((x float) (y float)) (- x y))
 (defmethod py-+  ((x float) (y float)) (+ x y))
 
-(defmethod py-// ((x integer) (y integer)) (careful-float-1ret x y))
+(defmethod py-// ((x integer) (y integer)) (careful-/-1ret x y))
 
-(defmethod py-/ ((x integer) (y integer)) (careful-float-1ret x y))
+(defmethod py-/ ((x integer) (y integer)) (careful-/-1ret x y))
 (defmethod py-/ ((x float) (y float)) (/ x y))
 
 ;; Augmented assignment
