@@ -1,6 +1,8 @@
 CLPython - an implementation of Python in Common Lisp
 =====================================================
 
+WIP PYTHON 3 FORK
+
 CLPython is an open-source implementation of Python written in Common Lisp.
 With CLPython you can run Python programs in a Lisp environment. Libraries written
 in Lisp are available to Python code, and Python libraries can be accessed by Lisp code.
@@ -9,10 +11,11 @@ Also Python and Lisp code can be mixed.
 For rough documentation, please see the [Introduction](http://common-lisp.net/project/clpython/index.html) and
 [Manual](http://common-lisp.net/project/clpython/manual.html) on *common-lisp.net*.
 
-To install using QuickLisp: `(ql:quickload "clpython")` (require ASDF 3.3 or higher).
+Work on this fork has barely been started so it is not in QuickLisp or Ultralisp yet.
 
 CLPython is developed by Willem Broekema and is released as open source under the [LLGPL](http://opensource.franz.com/preamble.html).
 The project was started in 2006, and is since 2013 not under active development anymore.
+This fork is an attempt by figere99 at porting CLPython to Python 3 while touching it up along the way.
 
 See the [build status](https://travis-ci.org/metawilm/cl-python) on Travis-CI, and the [coverage status](https://coveralls.io/github/metawilm/cl-python?branch=master) on Coveralls:
 
