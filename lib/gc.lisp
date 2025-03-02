@@ -17,5 +17,4 @@
 
 (defun |collect| (&optional generation)
   (declare (ignorable generation))
-  #+allegro (excl:gc t)
-  #-allegro (warn "gc.collect() not implemented in this Lisp implementation"))
+  (trivial-garbage:gc :full t))

@@ -98,7 +98,7 @@
 
 (defsystem "clpython/lib"
     :description "Python module library"
-    :depends-on ("clpython/basic" "clpython/runtime" "clpython/compiler" #| TODO: remove compiler dep |#)
+    :depends-on ("clpython/basic" "clpython/runtime" "clpython/compiler" "trivial-garbage" #| TODO: remove compiler dep |#)
     :components ((:module "lib"
                           :serial t
                           :components ((:file "lsetup" :around-compile call-with-suppressed-clpython-package-warnings)
