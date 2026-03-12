@@ -1,7 +1,7 @@
 CLPython - an implementation of Python in Common Lisp
 =====================================================
 
-WIP PYTHON 3 FORK
+ARCHIVED - INITIAL MOTIVATION NULLED, PROBLEM WAS SOLVED IN A DOFFERENT WAY
 
 CLPython is an open-source implementation of Python written in Common Lisp.
 With CLPython you can run Python programs in a Lisp environment. Libraries written
